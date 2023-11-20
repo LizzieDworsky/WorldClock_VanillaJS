@@ -13,7 +13,6 @@
         </header>
         <main>
             <form>
-                <label for="location-select"></label>
                 <select id="location-select">
                     <option value="">Select a City</option>
                     <option value="Europe/Paris">Paris, France</option>
@@ -23,6 +22,20 @@
             </form>
         </main>
         <footer><p>Codded by Amy Dworsky</p></footer>
-        <script></script>
+        <script>
+            function currentTimeLocation(event) {
+                if (event.target.value.length > 0) {
+                    let currentTime = moment().tz(event.target.value);
+                    alert(
+                        `It is ${currentTime.format(
+                            "dddd, MMMM M, YYYY h:mm A"
+                        )} in ${event.target.value}`
+                    );
+                }
+            }
+
+            let locationSelect = document.getElementById("location-select");
+            locationSelect.addEventListener("change", currentTimeLocation);
+        </script>
     </body>
 </html>
