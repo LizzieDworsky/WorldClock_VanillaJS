@@ -1,1 +1,40 @@
+body {
+    color: #293644;
+}
 
+main {
+    background-image: url("../images/background-night.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding-top: 6rem;
+    min-height: 100rem;
+}
+
+.location-current-times {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.location-current-time-div {
+    background-color: rgba(200, 186, 161, 0.75);
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 6rem;
+}
+
+#location-select {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 10px;
+    color: inherit;
+    background-color: rgba(200, 186, 161);
+    margin-bottom: 6rem;
+}
