@@ -6,6 +6,7 @@
         <title>World Clock</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+        <link rel="stylesheet" href="./src/style.css" />
     </head>
     <body>
         <header>
@@ -23,26 +24,15 @@
         </main>
         <footer>
             <p>
-                <a href="https://github.com/LizzieDworsky/WorldClock_VanillaJS"
+                <a
+                    href="https://github.com/LizzieDworsky/WorldClock_VanillaJS"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     >Open-source code</a
                 >
                 by Amy Dworsky
             </p>
         </footer>
-        <script>
-            function currentTimeLocation(event) {
-                if (event.target.value.length > 0) {
-                    let currentTime = moment().tz(event.target.value);
-                    alert(
-                        `It is ${currentTime.format(
-                            "dddd, MMMM M, YYYY h:mm A"
-                        )} in ${event.target.value}`
-                    );
-                }
-            }
-
-            let locationSelect = document.getElementById("location-select");
-            locationSelect.addEventListener("change", currentTimeLocation);
-        </script>
+        <script type="module" src="./src/app.js"></script>
     </body>
 </html>
