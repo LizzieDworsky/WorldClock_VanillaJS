@@ -1,6 +1,7 @@
 body {
     color: #293644;
     background-color: rgba(200, 186, 161, 0.7);
+    font-family: sans-serif;
 }
 
 header {
@@ -32,6 +33,7 @@ main {
     border-radius: 10px;
     padding-top: 6rem;
     min-height: 80rem;
+    box-shadow: 5px 5px 20px -3px black;
 }
 
 footer {
@@ -62,6 +64,7 @@ footer a {
     display: flex;
     justify-content: space-between;
     text-align: center;
+    box-shadow: 5px 5px 20px -3px black;
 }
 
 .location-name {
@@ -96,4 +99,5 @@ footer a {
     color: inherit;
     background-color: rgba(200, 186, 161, 0.75);
     margin-bottom: 6rem;
+    box-shadow: 5px 5px 20px -3px black;
 }
