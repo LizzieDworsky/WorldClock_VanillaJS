@@ -1,5 +1,10 @@
 let timePanelCounter = 0;
 
+function displayLocalTime() {
+    let localTimeElement = document.getElementById("current-local-time");
+    localTimeElement.innerHTML = moment().format("h:mm A");
+}
+
 function currentTimeLocation(event) {
     if (event.target.value.length > 0) {
         if (timePanelCounter === 0) {
@@ -64,5 +69,7 @@ function injectHtml(panelNum) {
     locationTimesSection.innerHTML = newHtml;
 }
 
+displayLocalTime();
+setInterval(displayLocalTime, 60000);
 let locationSelect = document.getElementById("location-select");
 locationSelect.addEventListener("change", currentTimeLocation);
