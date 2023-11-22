@@ -1,3 +1,5 @@
+// add an option for the user to add or remove panels using a plus and minus icon instead of auto-adding
+
 let timePanelCounter = 0;
 
 function displayLocalTime() {
@@ -35,10 +37,18 @@ function updateTimePanel(event, panelNum) {
     let locationAmPmElement = document.getElementById(
         `location-time-am-pm-${panelNum}`
     );
-    let currentLocationTime = moment().tz(event.target.value);
 
-    locationNameElement.innerHTML =
+    let timeZone = event.target.value;
+    let locationName =
         event.target.options[event.target.selectedIndex].innerHTML;
+    if (event.target.value === "local") {
+        timeZone = moment.tz.guess();
+        locationName = "Current Location";
+    }
+
+    let currentLocationTime = moment().tz(timeZone);
+
+    locationNameElement.innerHTML = locationName;
     locationDateElement.innerHTML = currentLocationTime.format("MMMM Do, YYYY");
     locationTimeElement.innerHTML = currentLocationTime.format("h:mm:ss");
     locationAmPmElement.innerHTML = currentLocationTime.format("A");
