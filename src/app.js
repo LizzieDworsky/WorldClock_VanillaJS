@@ -1,10 +1,30 @@
 // add an option for the user to add or remove panels using a plus and minus icon instead of auto-adding
 
-let timePanelCounter = 0;
+let timePanelCounter = 1;
 
 function displayHeaderLocalTime() {
     let localTimeElement = document.getElementById("current-local-time");
     localTimeElement.innerHTML = moment().format("h:mm A");
+}
+
+function displayCurrentLocationTimeOnLoad() {
+    let panelElements = getPanelElements(0);
+    timeZone = moment.tz.guess();
+    formatLocationTime("Current Location", timeZone, panelElements);
+}
+
+function currentTimeLocation(event) {
+    if (event.target.value.length > 0) {
+        if (timePanelCounter < 3) {
+            injectHtml(timePanelCounter);
+            updateTimePanel(event, timePanelCounter);
+            timePanelCounter++;
+        } else {
+            injectHtml(timePanelCounter);
+            updateTimePanel(event, timePanelCounter);
+            timePanelCounter = 0;
+        }
+    }
 }
 
 function getPanelElements(panelNum) {
@@ -28,18 +48,13 @@ function getPanelElements(panelNum) {
     ];
 }
 
-function currentTimeLocation(event) {
-    if (event.target.value.length > 0) {
-        if (timePanelCounter < 3) {
-            injectHtml(timePanelCounter);
-            updateTimePanel(event, timePanelCounter);
-            timePanelCounter++;
-        } else {
-            injectHtml(timePanelCounter);
-            updateTimePanel(event, timePanelCounter);
-            timePanelCounter = 0;
-        }
-    }
+function formatLocationTime(locationName, timeZone, panelElements) {
+    let currentLocationTime = moment().tz(timeZone);
+
+    panelElements[0].innerHTML = locationName;
+    panelElements[1].innerHTML = currentLocationTime.format("MMMM Do, YYYY");
+    panelElements[2].innerHTML = currentLocationTime.format("h:mm:ss");
+    panelElements[3].innerHTML = currentLocationTime.format("A");
 }
 
 function updateTimePanel(event, panelNum) {
@@ -52,13 +67,7 @@ function updateTimePanel(event, panelNum) {
         timeZone = moment.tz.guess();
         locationName = "Current Location";
     }
-
-    let currentLocationTime = moment().tz(timeZone);
-
-    panelElements[0].innerHTML = locationName;
-    panelElements[1].innerHTML = currentLocationTime.format("MMMM Do, YYYY");
-    panelElements[2].innerHTML = currentLocationTime.format("h:mm:ss");
-    panelElements[3].innerHTML = currentLocationTime.format("A");
+    formatLocationTime(locationName, timeZone, panelElements);
 }
 
 function injectHtml(panelNum) {
@@ -86,6 +95,7 @@ function injectHtml(panelNum) {
     locationTimesSection.innerHTML = newHtml;
 }
 
+displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
 setInterval(displayHeaderLocalTime, 60000);
 let locationSelect = document.getElementById("location-select");
