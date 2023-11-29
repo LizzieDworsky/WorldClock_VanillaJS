@@ -1,5 +1,3 @@
-// add an option for the user to add or remove panels using a plus and minus icon instead of auto-adding
-
 let timePanelCounter = 1;
 
 function displayHeaderLocalTime() {

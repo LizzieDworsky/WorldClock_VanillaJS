@@ -22,6 +22,14 @@ header h2 {
     margin-left: auto;
 }
 
+header a {
+    text-decoration: none;
+}
+
+a {
+    color: #293644;
+}
+
 main {
     background-image: url("../images/background-night.jpg");
     background-size: cover;
@@ -38,10 +46,6 @@ main {
 
 footer {
     text-align: center;
-}
-
-footer a {
-    color: inherit;
 }
 
 .local-time-span {
