@@ -1,4 +1,16 @@
+import { timeZoneData } from "./timeZoneData.js";
+
 let timePanelCounter = 1;
+
+function setSelectOptions() {
+    let selectElement = document.getElementById("location-select");
+    for (let [value, text] of Object.entries(timeZoneData)) {
+        let option = document.createElement("option");
+        option.value = value;
+        option.textContent = text;
+        selectElement.appendChild(option);
+    }
+}
 
 function displayHeaderLocalTime() {
     let localTimeElement = document.getElementById("current-local-time");
@@ -7,7 +19,7 @@ function displayHeaderLocalTime() {
 
 function displayCurrentLocationTimeOnLoad() {
     let panelElements = getPanelElements(0);
-    timeZone = moment.tz.guess();
+    let timeZone = moment.tz.guess();
     formatLocationTime("Current Location", timeZone, panelElements);
 }
 
@@ -93,6 +105,7 @@ function injectHtml(panelNum) {
     locationTimesSection.innerHTML = newHtml;
 }
 
+setSelectOptions();
 displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
 setInterval(displayHeaderLocalTime, 60000);
