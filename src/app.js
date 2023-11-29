@@ -26,11 +26,11 @@ function displayCurrentLocationTimeOnLoad() {
 function currentTimeLocation(event) {
     if (event.target.value.length > 0) {
         if (timePanelCounter < 3) {
-            injectHtml(timePanelCounter);
+            injectHtml(event.target.value, timePanelCounter);
             updateTimePanel(event, timePanelCounter);
             timePanelCounter++;
         } else {
-            injectHtml(timePanelCounter);
+            injectHtml(event.target.value, timePanelCounter);
             updateTimePanel(event, timePanelCounter);
             timePanelCounter = 0;
         }
@@ -80,23 +80,20 @@ function updateTimePanel(event, panelNum) {
     formatLocationTime(locationName, timeZone, panelElements);
 }
 
-function injectHtml(panelNum) {
+function injectHtml(locationName, panelNum) {
     let newHtml = `<div class="location-current-time-div">
                         <div class="location-name-date-div">
                             <h3 class="location-name" id="location-name-${panelNum}">
-                                Los Angeles, USA
                             </h3>
                             <p class="location-date" id="location-date-${panelNum}">
-                                November 11th, 2023
                             </p>
                         </div>
                         <h4 class="location-time">
-                            <span id="location-time-${panelNum}"> 1:48:15 </span>
-
+                            <span class="${locationName}" id="location-time-${panelNum}"></span>
                             <span
                                 class="location-time-am-pm"
                                 id="location-time-am-pm-${panelNum}"
-                                >AM</span
+                                ></span
                             >
                         </h4>
                     </div>
@@ -105,9 +102,20 @@ function injectHtml(panelNum) {
     locationTimesSection.innerHTML = newHtml;
 }
 
+function updatePanelTime() {
+    let locationTimeElement = document.getElementById(`location-time-0`);
+    let timeZone = locationTimeElement.classList.value;
+    if (timeZone === "local") {
+        timeZone = moment.tz.guess();
+    }
+    let locationTime = moment().tz(timeZone);
+    locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
+}
+
+setInterval(updatePanelTime, 1000);
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
-setInterval(displayHeaderLocalTime, 60000);
+setInterval(displayHeaderLocalTime, 10000);
 let locationSelect = document.getElementById("location-select");
 locationSelect.addEventListener("change", currentTimeLocation);
