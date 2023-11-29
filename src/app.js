@@ -102,8 +102,19 @@ function injectHtml(locationName, panelNum) {
     locationTimesSection.innerHTML = newHtml;
 }
 
-function updatePanelTime() {
-    let locationTimeElement = document.getElementById(`location-time-0`);
+function handlePanelTimeUpdates() {
+    let allLocationCurrentTimeElements = document.querySelectorAll(
+        ".location-current-time-div"
+    );
+    for (let i = 0; i < allLocationCurrentTimeElements.length; i++) {
+        updatePanelTime(i);
+    }
+}
+
+function updatePanelTime(panelNum) {
+    let locationTimeElement = document.getElementById(
+        `location-time-${panelNum}`
+    );
     let timeZone = locationTimeElement.classList.value;
     if (timeZone === "local") {
         timeZone = moment.tz.guess();
@@ -112,7 +123,7 @@ function updatePanelTime() {
     locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
 }
 
-setInterval(updatePanelTime, 1000);
+setInterval(handlePanelTimeUpdates, 1000);
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
