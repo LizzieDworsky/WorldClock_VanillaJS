@@ -93,46 +93,6 @@ function injectHtml(panelNum) {
                 `;
     let locationTimesSection = document.getElementById(`location-${panelNum}`);
     locationTimesSection.innerHTML = newHtml;
-    handlePlusMinusAdjustments(panelNum);
-}
-
-function handlePlusMinusAdjustments(panelNum) {
-    let plusMinusDiv = document.querySelector(".plus-minus");
-
-    if (panelNum == 1 || panelNum == 2) {
-        let plusMinusSymbol = `
-            <i class="fa-solid fa-minus"></i>
-            <i class="fa-solid fa-plus"></i>
-            `;
-        plusMinusDiv.innerHTML = plusMinusSymbol;
-        adjustPlusMinusPosition(26, 15);
-    } else if (panelNum == 3) {
-        let minusSymbol = `<i class="fa-solid fa-minus"></i>`;
-        plusMinusDiv.innerHTML = minusSymbol;
-        adjustPlusMinusPosition(10, 30);
-    } else {
-        let plusSymbol = `<i class="fa-solid fa-plus"></i>`;
-        plusMinusDiv.innerHTML = plusSymbol;
-        adjustPlusMinusPosition(10, 30);
-    }
-}
-
-function adjustPlusMinusPosition(topOffset, rightOffset) {
-    let currentTimesDiv = document.querySelector(".location-current-times");
-    let plusMinusDiv = document.querySelector(".plus-minus");
-
-    if (currentTimesDiv && plusMinusDiv) {
-        let panels = currentTimesDiv.querySelectorAll(
-            ".location-current-time-div"
-        );
-        if (panels.length > 0) {
-            let lastPanel = panels[panels.length - 1];
-            let bottomOfLastPanel =
-                lastPanel.offsetTop + lastPanel.offsetHeight - topOffset;
-            plusMinusDiv.style.top = `${bottomOfLastPanel}px`;
-            plusMinusDiv.style.right = `${rightOffset}px`;
-        }
-    }
 }
 
 displayCurrentLocationTimeOnLoad();

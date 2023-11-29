@@ -36,14 +36,6 @@ main {
     box-shadow: 5px 5px 20px -3px black;
 }
 
-i {
-    color: rgba(200, 186, 161);
-    width: 100%;
-}
-i:hover {
-    cursor: pointer;
-}
-
 footer {
     text-align: center;
 }
@@ -58,23 +50,10 @@ footer a {
     text-align: center;
 }
 
-.location-current-times-plus-minus {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .location-current-times {
-    flex: 0 0 85%;
+    display: block;
+    width: 85%;
     margin: 0 auto;
-}
-
-.plus-minus {
-    position: absolute;
-    right: 4%;
-    top: 55%;
-    transform: translateY(-50%);
 }
 
 .location-current-time-div {
