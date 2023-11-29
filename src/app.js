@@ -93,6 +93,24 @@ function injectHtml(panelNum) {
                 `;
     let locationTimesSection = document.getElementById(`location-${panelNum}`);
     locationTimesSection.innerHTML = newHtml;
+    adjustPlusMinusPosition();
+}
+
+function adjustPlusMinusPosition() {
+    let currentTimesDiv = document.querySelector(".location-current-times");
+    let plusMinusDiv = document.querySelector(".plus-minus");
+
+    if (currentTimesDiv && plusMinusDiv) {
+        let panels = currentTimesDiv.querySelectorAll(
+            ".location-current-time-div"
+        );
+        if (panels.length > 0) {
+            let lastPanel = panels[panels.length - 1];
+            let bottomOfLastPanel =
+                lastPanel.offsetTop + lastPanel.offsetHeight - 10;
+            plusMinusDiv.style.top = `${bottomOfLastPanel}px`;
+        }
+    }
 }
 
 displayCurrentLocationTimeOnLoad();
@@ -100,3 +118,4 @@ displayHeaderLocalTime();
 setInterval(displayHeaderLocalTime, 60000);
 let locationSelect = document.getElementById("location-select");
 locationSelect.addEventListener("change", currentTimeLocation);
+window.addEventListener("resize", adjustPlusMinusPosition);
