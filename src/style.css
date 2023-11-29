@@ -38,6 +38,10 @@ main {
 
 i {
     color: rgba(200, 186, 161);
+    width: 100%;
+}
+i:hover {
+    cursor: pointer;
 }
 
 footer {
@@ -68,12 +72,9 @@ footer a {
 
 .plus-minus {
     position: absolute;
-    right: 40px;
+    right: 4%;
     top: 55%;
     transform: translateY(-50%);
-}
-.plus-minus:hover {
-    cursor: pointer;
 }
 
 .location-current-time-div {
