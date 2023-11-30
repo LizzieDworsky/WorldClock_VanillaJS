@@ -9,21 +9,29 @@
         <link rel="stylesheet" href="./src/style.css" />
     </head>
     <body id="body" class="">
+        <!-- Class is dynamically assigned by JavaScript -->
         <header>
-            <a href="/">
+            <a href="/" aria-label="Return to homepage">
                 <h1>World Clock</h1>
             </a>
-            <h2>
+            <div>
                 <div class="local-time-span">Local Time:</div>
-                <span id="current-local-time"></span>
-            </h2>
+                <div id="current-local-time"></div>
+            </div>
         </header>
         <main id="main" class="">
+            <!-- Class is dynamically assigned by JavaScript -->
             <section class="location-form">
                 <form>
-                    <select class="" id="location-select">
-                        <option value="">
-                            Select A City (display up to four)
+                    <select
+                        class=""
+                        id="location-select"
+                        aria-label="Select a city for the time there."
+                    >
+                        <!-- Class is dynamically assigned by JavaScript -->
+                        <option value="" disabled selected>
+                            Choose a city to display its time. Up to four cities
+                            can be shown sequentially.
                         </option>
                         <option value="local">My Location</option>
                     </select>
