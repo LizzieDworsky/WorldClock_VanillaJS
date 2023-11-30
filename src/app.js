@@ -34,16 +34,18 @@ function setTheme() {
     console.log(localTime.format("A"));
     if (localTime.format("A") === "AM") {
         bodyElement.classList = "day-theme-body";
-        mainElement.classList = "day-theme-main";
-        locationSelectElement.classList = "day-theme-location-time-select";
+        mainElement.classList = "day-theme-main box-shadow-class";
+        locationSelectElement.classList =
+            "day-theme-location-time-select box-shadow-class location-select color-inherit";
         for (let i = 0; i < panelElements.length; i++) {
             panelElements[i].classList =
-                "location-current-time-div day-theme-location-time-select";
+                "location-current-time-div day-theme-location-time-select box-shadow-class";
         }
     } else {
         bodyElement.classList = "night-theme-body";
-        mainElement.classList = "night-theme-main";
-        locationSelectElement.classList = "night-theme-location-time-select";
+        mainElement.classList = "night-theme-main box-shadow-class";
+        locationSelectElement.classList =
+            "night-theme-location-time-select box-shadow-class location-select color-inherit";
         for (let i = 0; i < panelElements.length; i++) {
             panelElements[i].classList =
                 "location-current-time-div night-theme-location-time-select";

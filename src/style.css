@@ -1,64 +1,74 @@
+/* Whole page or multi-section Desktop styles */
 body {
     font-family: sans-serif;
 }
-
-header {
-    display: flex;
+header,
+main {
     width: 60%;
     margin: 0 auto;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 150%;
-    font-weight: 800;
 }
-
-header h1 {
-    margin-right: auto;
-    font-weight: 900;
-}
-
-header p {
-    margin-left: auto;
-}
-
-header a {
-    text-decoration: none;
-}
-
-a {
+.color-inherit {
     color: inherit;
 }
-
-main {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: block;
-    width: 60%;
-    margin: 0 auto;
-    border-radius: 10px;
-    padding-top: 6rem;
-    min-height: 80rem;
+.box-shadow-class {
     box-shadow: 5px 5px 20px -3px black;
 }
-
-footer {
-    text-align: center;
-}
-
-.local-time-span {
-    display: block;
-    font-size: 0.6em;
-    font-weight: 500;
-    text-align: center;
-}
-
-.location-current-times {
+.location-current-times,
+.location-select {
     display: block;
     width: 85%;
     margin: 0 auto;
 }
 
+/* Header Desktop styles */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+header h1 {
+    margin-right: auto;
+    font-weight: 900;
+}
+header p {
+    margin-left: auto;
+}
+header a {
+    text-decoration: none;
+}
+.local-time-div {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+}
+.current-local-time {
+    display: block;
+    font-size: 2.25rem;
+}
+
+/* Main Desktop styles */
+main {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    border-radius: 10px;
+    padding-top: 6rem;
+    min-height: 80rem;
+}
+
+/* Location Form Section */
+.location-select {
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 6rem;
+}
+
+/* Location Time Section */
 .location-current-time-div {
     border-radius: 10px;
     padding: 25px;
@@ -66,47 +76,30 @@ footer {
     display: flex;
     justify-content: space-between;
     text-align: center;
-    box-shadow: 5px 5px 20px -3px black;
 }
-
 .location-name {
-    font-size: 175%;
+    font-size: 2rem;
     margin: 15px;
 }
-
 .location-date {
     margin: 15px;
 }
-
 .location-time {
-    font-size: 300%;
+    font-size: 3.25rem;
     margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .location-time-am-pm {
-    font-size: 30%;
+    font-size: 0.9rem;
     line-height: 0;
     padding-left: 10px;
 }
 
-#current-local-time {
-    display: block;
-    font-size: 1.5em;
-}
-
-#location-select {
-    display: block;
-    border: none;
-    width: 85%;
-    margin: 0 auto;
-    border-radius: 4px;
-    padding: 10px;
-    color: inherit;
-    margin-bottom: 6rem;
-    box-shadow: 5px 5px 20px -3px black;
+/* Footer Desktop styles */
+footer {
+    text-align: center;
 }
 
 /* CSS for Night Theme */
@@ -117,6 +110,7 @@ footer {
 
 .night-theme-main {
     background-image: url("../images/background-night.jpg");
+    background-color: #334b48;
 }
 
 .night-theme-location-time-select {
@@ -131,6 +125,7 @@ footer {
 
 .day-theme-main {
     background-image: url("../images/background-day.jpg");
+    background-color: #81b2ca;
 }
 
 .day-theme-location-time-select {
