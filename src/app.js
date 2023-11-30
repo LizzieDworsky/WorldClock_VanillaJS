@@ -17,6 +17,40 @@ function displayHeaderLocalTime() {
     localTimeElement.innerHTML = moment().format("h:mm A");
 }
 
+function setTheme() {
+    let localTime = moment();
+    let bodyElement = document.getElementById("body");
+    let mainElement = document.getElementById("main");
+    let locationSelectElement = document.getElementById("location-select");
+    let panelElements = document.querySelectorAll(".location-current-time-div");
+    console.log(bodyElement, mainElement, panelElements);
+    bodyElement.classList = "";
+    mainElement.classList = "";
+    locationSelectElement.classList = "";
+    for (let i = 0; i < panelElements.length; i++) {
+        panelElements[i].classList = "";
+    }
+    console.log(bodyElement, mainElement, panelElements);
+    console.log(localTime.format("A"));
+    if (localTime.format("A") === "AM") {
+        bodyElement.classList = "day-theme-body";
+        mainElement.classList = "day-theme-main";
+        locationSelectElement.classList = "day-theme-location-time-select";
+        for (let i = 0; i < panelElements.length; i++) {
+            panelElements[i].classList =
+                "location-current-time-div day-theme-location-time-select";
+        }
+    } else {
+        bodyElement.classList = "night-theme-body";
+        mainElement.classList = "night-theme-main";
+        locationSelectElement.classList = "night-theme-location-time-select";
+        for (let i = 0; i < panelElements.length; i++) {
+            panelElements[i].classList =
+                "location-current-time-div night-theme-location-time-select";
+        }
+    }
+}
+
 function displayCurrentLocationTimeOnLoad() {
     let panelElements = getPanelElements(0);
     let timeZone = moment.tz.guess();
@@ -100,6 +134,8 @@ function injectHtml(locationName, panelNum) {
                 `;
     let locationTimesSection = document.getElementById(`location-${panelNum}`);
     locationTimesSection.innerHTML = newHtml;
+    debugger;
+    setTheme();
 }
 
 function handlePanelTimeUpdates() {
@@ -123,6 +159,7 @@ function updatePanelTime(panelNum) {
     locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
 }
 
+setTheme();
 setInterval(handlePanelTimeUpdates, 1000);
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();

@@ -1,6 +1,4 @@
 body {
-    color: #293644;
-    background-color: rgba(200, 186, 161, 0.7);
     font-family: sans-serif;
 }
 
@@ -27,11 +25,10 @@ header a {
 }
 
 a {
-    color: #293644;
+    color: inherit;
 }
 
 main {
-    background-image: url("../images/background-night.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -61,7 +58,6 @@ footer {
 }
 
 .location-current-time-div {
-    background-color: rgba(200, 186, 161, 0.75);
     border-radius: 10px;
     padding: 25px;
     margin-bottom: 6rem;
@@ -96,12 +92,40 @@ footer {
 
 #location-select {
     display: block;
+    border: none;
     width: 85%;
     margin: 0 auto;
     border-radius: 4px;
     padding: 10px;
     color: inherit;
-    background-color: rgba(200, 186, 161, 0.75);
     margin-bottom: 6rem;
     box-shadow: 5px 5px 20px -3px black;
+}
+
+/* CSS for Night Theme */
+.night-theme-body {
+    color: #293644;
+    background-color: rgba(200, 186, 161, 0.7);
+}
+
+.night-theme-main {
+    background-image: url("../images/background-night.jpg");
+}
+
+.night-theme-location-time-select {
+    background-color: rgba(200, 186, 161, 0.75);
+}
+
+/* CSS for Day Theme */
+.day-theme-body {
+    color: #c6bdb8;
+    background-color: rgba(28, 40, 46);
+}
+
+.day-theme-main {
+    background-image: url("../images/background-day.jpg");
+}
+
+.day-theme-location-time-select {
+    background-color: rgba(28, 40, 46, 0.65);
 }
