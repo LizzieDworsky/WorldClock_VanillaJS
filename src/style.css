@@ -134,6 +134,18 @@ footer {
 }
 
 /* Responsive Styles */
+
+/* Larger devices (less than 1080px) */
+@media (max-width: 1080px) {
+    header,
+    main {
+        width: 70%;
+    }
+    .location-time {
+        font-size: 3rem;
+    }
+}
+/* Medium devices (less than 991px) */
 @media (max-width: 991px) {
     header,
     main {
@@ -143,23 +155,82 @@ footer {
         font-size: 2.5rem;
     }
 }
-
+/* Medium-small devices (less than 767px) */
 @media (max-width: 767px) {
     header,
     main {
         width: 95%;
     }
-
+    h1 {
+        font-size: 2rem;
+    }
+    main {
+        min-height: 70rem;
+    }
+    .current-local-time {
+        font-size: 1.75rem;
+    }
+    .location-current-times,
+    .location-select {
+        width: 90%;
+    }
+    .location-select {
+        margin-bottom: 5rem;
+    }
+    .location-current-time-div {
+        padding: 15px;
+        margin-bottom: 4rem;
+    }
+    .location-date {
+        font-size: 0.9rem;
+    }
+    .location-name {
+        font-size: 1.5rem;
+    }
     .location-time {
-        font-size: 2.25rem;
+        font-size: 1.75rem;
+    }
+    .location-time-am-pm {
+        font-size: 0.7rem;
     }
 }
+/* Smallest devices (less than 480px) */
 @media (max-width: 480px) {
-    header {
-        width: 99.5%;
-    }
-
+    header,
     main {
         width: 99.5%;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    main {
+        min-height: 50rem;
+    }
+    .current-local-time {
+        font-size: 1.25rem;
+    }
+    .location-current-times,
+    .location-select {
+        width: 98%;
+    }
+    .location-select {
+        margin-bottom: 4rem;
+    }
+    .location-current-time-div {
+        padding: 5px;
+        margin-bottom: 2rem;
+    }
+    .location-date {
+        font-size: 0.7rem;
+    }
+    .location-name {
+        font-size: 1rem;
+    }
+    .location-time {
+        font-size: 1rem;
+    }
+    .location-time-am-pm {
+        padding-left: 2px;
+        font-size: 0.7rem;
     }
 }

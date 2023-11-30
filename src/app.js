@@ -136,7 +136,6 @@ function injectHtml(locationName, panelNum) {
                 `;
     let locationTimesSection = document.getElementById(`location-${panelNum}`);
     locationTimesSection.innerHTML = newHtml;
-    debugger;
     setTheme();
 }
 
