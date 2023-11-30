@@ -4,6 +4,10 @@ let timePanelCounter = 1;
 
 function setSelectOptions() {
     let selectElement = document.getElementById("location-select");
+    if (!selectElement) {
+        console.error("Select element was not found.");
+        return;
+    }
     for (let [value, text] of Object.entries(timeZoneData)) {
         let option = document.createElement("option");
         option.value = value;
@@ -13,8 +17,18 @@ function setSelectOptions() {
 }
 
 function displayHeaderLocalTime() {
-    let localTimeElement = document.getElementById("current-local-time");
-    localTimeElement.innerHTML = moment().format("h:mm A");
+    try {
+        let localTimeElement = document.getElementById("current-local-time");
+        if (!localTimeElement) {
+            console.error("One or more location elements were not found.");
+            return;
+        }
+        localTimeElement.innerHTML = moment().format("h:mm A");
+    } catch (error) {
+        console.error(
+            `Error adding current local time for header: ${error.message}`
+        );
+    }
 }
 
 function getThemeElements() {
@@ -82,7 +96,13 @@ function addThemeClasses(themeElements, newTheme) {
 }
 
 function setTheme() {
-    let localTime = moment();
+    let localTimeAmPM;
+    try {
+        localTimeAmPM = moment().format("A");
+    } catch (error) {
+        console.error(`Error formatting Time for Theme: ${error.message}`);
+    }
+
     let themeElements = getThemeElements();
     if (!themeElements) {
         console.error("Failed to set theme due to missing elements.");
@@ -100,7 +120,7 @@ function setTheme() {
     ) {
         removeThemeClasses(themeElements, "night");
     }
-    if (localTime.format("A") === "AM") {
+    if (localTimeAmPM === "AM") {
         addThemeClasses(themeElements, "day");
     } else {
         addThemeClasses(themeElements, "night");
@@ -108,9 +128,19 @@ function setTheme() {
 }
 
 function displayCurrentLocationTimeOnLoad() {
-    let panelElements = getPanelElements(0);
-    let timeZone = moment.tz.guess();
-    formatLocationTime("Current Location", timeZone, panelElements);
+    try {
+        let panelElements = getPanelElements(0);
+        if (!panelElements) {
+            console.error("Failed to add time panel due to missing elements.");
+            return;
+        }
+        let timeZone = moment.tz.guess();
+        formatLocationTime("Current Location", timeZone, panelElements);
+    } catch (error) {
+        console.error(
+            `Error adding current location time on load: ${error.message}`
+        );
+    }
 }
 
 function currentTimeLocation(event) {
@@ -140,34 +170,53 @@ function getPanelElements(panelNum) {
     let locationAmPmElement = document.getElementById(
         `location-time-am-pm-${panelNum}`
     );
-    return [
-        locationNameElement,
-        locationDateElement,
-        locationTimeElement,
-        locationAmPmElement,
-    ];
+    if (
+        !locationNameElement ||
+        !locationDateElement ||
+        !locationTimeElement ||
+        !locationAmPmElement
+    ) {
+        console.error("One or more location elements were not found.");
+        return null;
+    }
+    return {
+        locationNameElement: locationNameElement,
+        locationDateElement: locationDateElement,
+        locationTimeElement: locationTimeElement,
+        locationAmPmElement: locationAmPmElement,
+    };
 }
 
 function formatLocationTime(locationName, timeZone, panelElements) {
     let currentLocationTime = moment().tz(timeZone);
 
-    panelElements[0].innerHTML = locationName;
-    panelElements[1].innerHTML = currentLocationTime.format("MMMM Do, YYYY");
-    panelElements[2].innerHTML = currentLocationTime.format("h:mm:ss");
-    panelElements[3].innerHTML = currentLocationTime.format("A");
+    panelElements["locationNameElement"].innerHTML = locationName;
+    panelElements["locationDateElement"].innerHTML =
+        currentLocationTime.format("MMMM Do, YYYY");
+    panelElements["locationTimeElement"].innerHTML =
+        currentLocationTime.format("h:mm:ss");
+    panelElements["locationAmPmElement"].innerHTML =
+        currentLocationTime.format("A");
 }
 
 function updateTimePanel(event, panelNum) {
-    let panelElements = getPanelElements(panelNum);
-
-    let timeZone = event.target.value;
-    let locationName =
-        event.target.options[event.target.selectedIndex].innerHTML;
-    if (event.target.value === "local") {
-        timeZone = moment.tz.guess();
-        locationName = "Current Location";
+    try {
+        let panelElements = getPanelElements(panelNum);
+        if (!panelElements) {
+            console.error("Failed to add time panel due to missing elements.");
+            return;
+        }
+        let timeZone = event.target.value;
+        let locationName =
+            event.target.options[event.target.selectedIndex].innerHTML;
+        if (event.target.value === "local") {
+            timeZone = moment.tz.guess();
+            locationName = "Current Location";
+        }
+        formatLocationTime(locationName, timeZone, panelElements);
+    } catch (error) {
+        console.error(`Error updating panel ${panelNum}: ${error.message}`);
     }
-    formatLocationTime(locationName, timeZone, panelElements);
 }
 
 function injectHtml(locationName, panelNum) {
@@ -189,6 +238,12 @@ function injectHtml(locationName, panelNum) {
                     </div>
                 `;
     let locationTimesSection = document.getElementById(`location-${panelNum}`);
+    if (!locationTimesSection) {
+        console.error(
+            `Location times section (location-${panelNum}) not found.`
+        );
+        return;
+    }
     locationTimesSection.innerHTML = newHtml;
     setTheme();
 }
@@ -203,22 +258,31 @@ function handlePanelTimeUpdates() {
 }
 
 function updatePanelTime(panelNum) {
-    let locationTimeElement = document.getElementById(
-        `location-time-${panelNum}`
-    );
-    let timeZone = locationTimeElement.classList.value;
-    if (timeZone === "local") {
-        timeZone = moment.tz.guess();
+    try {
+        let locationTimeElement = document.getElementById(
+            `location-time-${panelNum}`
+        );
+        let timeZone = locationTimeElement.classList.value;
+        if (timeZone === "local") {
+            timeZone = moment.tz.guess();
+        }
+        let locationTime = moment().tz(timeZone);
+        locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
+    } catch (error) {
+        console.error(`Error updating panel time: ${error.message}`);
     }
-    let locationTime = moment().tz(timeZone);
-    locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
 }
 
 setTheme();
-setInterval(handlePanelTimeUpdates, 1000);
+let panelInterval = setInterval(handlePanelTimeUpdates, 1000);
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
-setInterval(displayHeaderLocalTime, 10000);
+let headerTimeInterval = setInterval(displayHeaderLocalTime, 10000);
 let locationSelect = document.getElementById("location-select");
 locationSelect.addEventListener("change", currentTimeLocation);
+
+window.addEventListener("beforeunload", function () {
+    clearInterval(panelInterval);
+    clearInterval(headerTimeInterval);
+});
