@@ -17,39 +17,69 @@ function displayHeaderLocalTime() {
     localTimeElement.innerHTML = moment().format("h:mm A");
 }
 
-function setTheme() {
-    let localTime = moment();
+function getThemeElements() {
     let bodyElement = document.getElementById("body");
     let mainElement = document.getElementById("main");
     let locationSelectElement = document.getElementById("location-select");
     let panelElements = document.querySelectorAll(".location-current-time-div");
-    console.log(bodyElement, mainElement, panelElements);
-    bodyElement.classList = "";
-    mainElement.classList = "";
-    locationSelectElement.classList = "";
+    return {
+        bodyElement: bodyElement,
+        mainElement: mainElement,
+        locationSelectElement: locationSelectElement,
+        panelElements: panelElements,
+    };
+}
+
+function panelLoopAddRemoveTheme(panelElements, addRemove, themeClass) {
     for (let i = 0; i < panelElements.length; i++) {
-        panelElements[i].classList = "";
+        if (addRemove === "remove") {
+            panelElements[i].classList.remove(
+                `${themeClass}-theme-location-time-select`
+            );
+        } else {
+            panelElements[i].classList.add(
+                `${themeClass}-theme-location-time-select`
+            );
+        }
     }
-    console.log(bodyElement, mainElement, panelElements);
-    console.log(localTime.format("A"));
+}
+
+function removeThemeClasses(themeElements, currentTheme) {
+    themeElements["bodyElement"].classList.remove(`${currentTheme}-theme-body`);
+    themeElements["mainElement"].classList.remove(`${currentTheme}-theme-main`);
+    themeElements["locationSelectElement"].classList.remove(
+        `${currentTheme}-theme-location-time-select`
+    );
+    panelLoopAddRemoveTheme(
+        themeElements["panelElements"],
+        "remove",
+        currentTheme
+    );
+}
+
+function addThemeClasses(themeElements, newTheme) {
+    themeElements["bodyElement"].classList.add(`${newTheme}-theme-body`);
+    themeElements["mainElement"].classList.add(`${newTheme}-theme-main`);
+    themeElements["locationSelectElement"].classList.add(
+        `${newTheme}-theme-location-time-select`
+    );
+    panelLoopAddRemoveTheme(themeElements["panelElements"], "add", newTheme);
+}
+
+function setTheme() {
+    let localTime = moment();
+    let themeElements = getThemeElements();
+    if (themeElements["bodyElement"].classList.contains("day-theme-body")) {
+        removeThemeClasses(themeElements, "day");
+    } else if (
+        themeElements["bodyElement"].classList.contains("night-theme-body")
+    ) {
+        removeThemeClasses(themeElements, "night");
+    }
     if (localTime.format("A") === "AM") {
-        bodyElement.classList = "day-theme-body";
-        mainElement.classList = "day-theme-main box-shadow-class";
-        locationSelectElement.classList =
-            "day-theme-location-time-select box-shadow-class location-select color-inherit";
-        for (let i = 0; i < panelElements.length; i++) {
-            panelElements[i].classList =
-                "location-current-time-div day-theme-location-time-select box-shadow-class";
-        }
+        addThemeClasses(themeElements, "day");
     } else {
-        bodyElement.classList = "night-theme-body";
-        mainElement.classList = "night-theme-main box-shadow-class";
-        locationSelectElement.classList =
-            "night-theme-location-time-select box-shadow-class location-select color-inherit";
-        for (let i = 0; i < panelElements.length; i++) {
-            panelElements[i].classList =
-                "location-current-time-div night-theme-location-time-select";
-        }
+        addThemeClasses(themeElements, "night");
     }
 }
 
