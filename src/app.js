@@ -22,6 +22,15 @@ function getThemeElements() {
     let mainElement = document.getElementById("main");
     let locationSelectElement = document.getElementById("location-select");
     let panelElements = document.querySelectorAll(".location-current-time-div");
+    if (
+        !bodyElement ||
+        !mainElement ||
+        !locationSelectElement ||
+        !panelElements.length
+    ) {
+        console.error("One or more theme elements were not found.");
+        return null;
+    }
     return {
         bodyElement: bodyElement,
         mainElement: mainElement,
@@ -31,6 +40,12 @@ function getThemeElements() {
 }
 
 function panelLoopAddRemoveTheme(panelElements, addRemove, themeClass) {
+    if (!panelElements) {
+        console.error(
+            "Panel elements not provided for theme class manipulation."
+        );
+        return;
+    }
     for (let i = 0; i < panelElements.length; i++) {
         if (addRemove === "remove") {
             panelElements[i].classList.remove(
@@ -69,6 +84,15 @@ function addThemeClasses(themeElements, newTheme) {
 function setTheme() {
     let localTime = moment();
     let themeElements = getThemeElements();
+    if (!themeElements) {
+        console.error("Failed to set theme due to missing elements.");
+        return;
+    }
+    if (themeElements.bodyElement.classList.contains("default-body")) {
+        themeElements.bodyElement.classList.remove("default-body");
+        themeElements.mainElement.classList.remove("default-main");
+        themeElements.locationSelectElement.classList.remove("default-select");
+    }
     if (themeElements["bodyElement"].classList.contains("day-theme-body")) {
         removeThemeClasses(themeElements, "day");
     } else if (

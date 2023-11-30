@@ -8,8 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
         <link rel="stylesheet" href="./src/style.css" />
     </head>
-    <body id="body" class="">
-        <!-- Class is dynamically assigned by JavaScript -->
+    <body id="body" class="default-body">
         <header>
             <a href="/" aria-label="Return to homepage" class="color-inherit">
                 <h1>World Clock</h1>
@@ -19,11 +18,11 @@
                 <div class="current-local-time" id="current-local-time"></div>
             </div>
         </header>
-        <main id="main" class="box-shadow-class">
+        <main id="main" class="default-main box-shadow-class">
             <section class="location-form">
                 <form>
                     <select
-                        class="box-shadow-class location-select color-inherit"
+                        class="box-shadow-class location-select color-inherit default-select"
                         id="location-select"
                         aria-label="Select a city for the time there."
                     >

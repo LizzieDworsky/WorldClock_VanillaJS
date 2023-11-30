@@ -103,6 +103,17 @@ footer {
     text-align: center;
 }
 
+/* CSS Default Theme */
+.default-body {
+    background-color: #3f6675;
+}
+.default-main {
+    background-color: #588d81;
+}
+.default-select {
+    background-color: #588d81;
+}
+
 /* CSS for Night Theme */
 .night-theme-body {
     color: #293644;
