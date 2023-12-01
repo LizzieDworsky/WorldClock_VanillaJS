@@ -1,7 +1,21 @@
+/**
+ * External Dependencies:
+ * - moment.js: Used for handling and formatting dates and times.
+ * - timeZoneData.js: Contains data for different time zones used in the application.
+ */
 import { timeZoneData } from "./timeZoneData.js";
-
+// Global Variables
+/**
+ * Global variable for tracking the current panel.
+ * It represents the index of the time panel currently being manipulated or viewed.
+ */
 let timePanelCounter = 1;
-
+/**
+ * Populates the select options with time zones from the timeZoneData.
+ * Example Usage:
+ * setSelectOptions();
+ * // After this function is called, the 'location-select' dropdown will be filled with time zones.
+ */
 function setSelectOptions() {
     const selectElement = document.getElementById("location-select");
     if (!selectElement) {
@@ -15,7 +29,13 @@ function setSelectOptions() {
         selectElement.appendChild(option);
     }
 }
-
+/**
+ * Displays the current local time in the header.
+ * Example Usage:
+ * displayHeaderLocalTime();
+ * // This will update the 'current-local-time' element with the current local time.
+ * @throws Will log an error if unable to display the local time.
+ */
 function displayHeaderLocalTime() {
     try {
         const localTimeElement = document.getElementById("current-local-time");
@@ -30,7 +50,12 @@ function displayHeaderLocalTime() {
         );
     }
 }
-
+/**
+ * Retrieves DOM elements related to the application theme.
+ * Example Usage:
+ * const themeElements = getThemeElements();
+ * @returns {Object|null} An object with references to theme-related DOM elements, structured as { bodyElement, mainElement, locationSelectElement, panelElements } or null if elements are not found.
+ */
 function getThemeElements() {
     const bodyElement = document.getElementById("body");
     const mainElement = document.getElementById("main");
@@ -54,7 +79,12 @@ function getThemeElements() {
         panelElements: panelElements,
     };
 }
-
+/**
+ * Adds or removes a specific theme class to/from each panel element.
+ * @param {HTMLElement[]} panelElements - Array of panel elements to which the theme class will be applied.
+ * @param {'add'|'remove'} addRemove - Specifies the action to perform. 'add' to apply the theme class, 'remove' to remove it.
+ * @param {string} themeClass - The CSS class name related to the theme to be added or removed.
+ */
 function panelLoopAddRemoveTheme(panelElements, addRemove, themeClass) {
     if (!panelElements) {
         console.error(
@@ -75,6 +105,14 @@ function panelLoopAddRemoveTheme(panelElements, addRemove, themeClass) {
     }
 }
 
+/**
+ * Removes a specific theme from the theme elements.
+ * Example Usage:
+ * removeThemeClasses(themeElements, "day");
+ * // This will remove 'day' theme classes from the elements in themeElements.
+ * @param {Object} themeElements - Object containing theme-related DOM elements.
+ * @param {string} currentTheme - The current theme to be removed.
+ */
 function removeThemeClasses(themeElements, currentTheme) {
     themeElements["bodyElement"].classList.remove(`${currentTheme}-theme-body`);
     themeElements["mainElement"].classList.remove(`${currentTheme}-theme-main`);
@@ -87,7 +125,14 @@ function removeThemeClasses(themeElements, currentTheme) {
         currentTheme
     );
 }
-
+/**
+ * Adds a specific theme to the theme elements.
+ * Example Usage:
+ * addThemeClasses(themeElements, "night");
+ * // This will add 'night' theme classes to the elements in themeElements.
+ * @param {Object} themeElements - Object containing theme-related DOM elements.
+ * @param {string} newTheme - The new theme to be applied.
+ */
 function addThemeClasses(themeElements, newTheme) {
     themeElements["bodyElement"].classList.add(`${newTheme}-theme-body`);
     themeElements["mainElement"].classList.add(`${newTheme}-theme-main`);
@@ -96,7 +141,12 @@ function addThemeClasses(themeElements, newTheme) {
     );
     panelLoopAddRemoveTheme(themeElements["panelElements"], "add", newTheme);
 }
-
+/**
+ * Sets the application theme based on the current local time.
+ * The theme is determined by whether it's AM or PM in the local time.
+ * This function dynamically changes the CSS classes of various elements to switch between 'day' and 'night' themes.
+ * @throws Will log an error if the theme cannot be set, typically due to issues with moment.js or missing DOM elements. Default theme will remain on application.
+ */
 function setTheme() {
     let localTimeAmPM;
     try {
@@ -128,7 +178,11 @@ function setTheme() {
         addThemeClasses(themeElements, "night");
     }
 }
-
+/**
+ * Displays the current location's time when the page is loaded.
+ * This function attempts to determine the user's local time zone and displays the corresponding local time.
+ * @throws {Error} Logs an error if it fails to display the current location time, typically due to issues with moment.js or missing DOM elements.
+ */
 function displayCurrentLocationTimeOnLoad() {
     try {
         const panelElements = getPanelElements(0);
@@ -144,7 +198,14 @@ function displayCurrentLocationTimeOnLoad() {
         );
     }
 }
-
+/**
+ * Handles the change event for the location select element.
+ * Updates the time panel based on the selected time zone.
+ * Example Usage:
+ * // Assuming 'locationSelect' is the select element and 'changeEvent' is the event object
+ * locationSelect.addEventListener('change', currentTimeLocation);
+ * @param {Event} event - The change event object from the select element.
+ */
 function currentTimeLocation(event) {
     if (event.target.value.length > 0) {
         if (timePanelCounter < 3) {
@@ -158,7 +219,11 @@ function currentTimeLocation(event) {
         }
     }
 }
-
+/**
+ * Retrieves DOM elements for a specific time panel.
+ * @param {number} panelNum - The panel number (index) to fetch elements for.
+ * @returns {Object|null} An object containing references to panel elements or null if elements are not found.
+ */
 function getPanelElements(panelNum) {
     const locationNameElement = document.getElementById(
         `location-name-${panelNum}`
@@ -188,7 +253,13 @@ function getPanelElements(panelNum) {
         locationAmPmElement: locationAmPmElement,
     };
 }
-
+/**
+ * Formats and displays the time for a specific location.
+ * Example Usage: formatLocationTime("New York", "America/New_York", panelElements);
+ * @param {string} locationName - The name of the location to display.
+ * @param {string} timeZone - The time zone identifier to use for time calculation.
+ * @param {Object} panelElements - The panel elements where the time should be displayed.
+ */
 function formatLocationTime(locationName, timeZone, panelElements) {
     const currentLocationTime = moment().tz(timeZone);
 
@@ -200,7 +271,12 @@ function formatLocationTime(locationName, timeZone, panelElements) {
     panelElements["locationAmPmElement"].innerHTML =
         currentLocationTime.format("A");
 }
-
+/**
+ * Updates the time displayed in a specific panel.
+ * @param {Event} event - The event object from the select element.
+ * @param {number} panelNum - The panel number (index) to update.
+ * @throws Will log an error if unable to update the panel time.
+ */
 function updateTimePanel(event, panelNum) {
     try {
         const panelElements = getPanelElements(panelNum);
@@ -220,7 +296,16 @@ function updateTimePanel(event, panelNum) {
         console.error(`Error updating panel ${panelNum}: ${error.message}`);
     }
 }
-
+/**
+ * Injects new HTML into a specific time panel with the given location name and panel number.
+ * The method dynamically creates a new time display panel for the specified location.
+ * Example Usage:
+ * injectHtml("Tokyo", 1);
+ * // This will create a new panel for Tokyo in the location-1 section of the document.
+ * @param {string} locationName - The location name to display in the panel. This is used to set the class name for time elements.
+ * @param {number} panelNum - The panel number (index) where the HTML should be injected. It determines the ID of elements created.
+ * @throws Will log an error if unable to inject HTML into the panel due to missing elements in the DOM.
+ */
 function injectHtml(locationName, panelNum) {
     const newHtml = `<div class="location-current-time-div">
                         <div class="location-name-date-div">
@@ -251,7 +336,9 @@ function injectHtml(locationName, panelNum) {
     locationTimesSection.innerHTML = newHtml;
     setTheme();
 }
-
+/**
+ * Periodically updates the time displayed in all time panels.
+ */
 function handlePanelTimeUpdates() {
     const allLocationCurrentTimeElements = document.querySelectorAll(
         ".location-current-time-div"
@@ -260,7 +347,11 @@ function handlePanelTimeUpdates() {
         updatePanelTime(i);
     }
 }
-
+/**
+ * Updates the time displayed in a specific panel.
+ * @param {number} panelNum - The panel number (index) to update.
+ * @throws Will log an error if unable to update the panel time.
+ */
 function updatePanelTime(panelNum) {
     try {
         const locationTimeElement = document.getElementById(
@@ -276,7 +367,11 @@ function updatePanelTime(panelNum) {
         console.error(`Error updating panel time: ${error.message}`);
     }
 }
-
+// Initialization and Event Listeners
+// This section sets up the initial state of the application and registers event listeners.
+// It includes setting the theme, populating time zone options, displaying the current time,
+// and establishing intervals for updating time displays. Additionally, it handles cleanup
+// of intervals to prevent memory leaks when the window is unloaded.
 setTheme();
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();
