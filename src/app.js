@@ -3,7 +3,7 @@ import { timeZoneData } from "./timeZoneData.js";
 let timePanelCounter = 1;
 
 function setSelectOptions() {
-    let selectElement = document.getElementById("location-select");
+    const selectElement = document.getElementById("location-select");
     if (!selectElement) {
         console.error("Select element was not found.");
         return;
@@ -18,7 +18,7 @@ function setSelectOptions() {
 
 function displayHeaderLocalTime() {
     try {
-        let localTimeElement = document.getElementById("current-local-time");
+        const localTimeElement = document.getElementById("current-local-time");
         if (!localTimeElement) {
             console.error("One or more location elements were not found.");
             return;
@@ -32,10 +32,12 @@ function displayHeaderLocalTime() {
 }
 
 function getThemeElements() {
-    let bodyElement = document.getElementById("body");
-    let mainElement = document.getElementById("main");
-    let locationSelectElement = document.getElementById("location-select");
-    let panelElements = document.querySelectorAll(".location-current-time-div");
+    const bodyElement = document.getElementById("body");
+    const mainElement = document.getElementById("main");
+    const locationSelectElement = document.getElementById("location-select");
+    const panelElements = document.querySelectorAll(
+        ".location-current-time-div"
+    );
     if (
         !bodyElement ||
         !mainElement ||
@@ -103,7 +105,7 @@ function setTheme() {
         console.error(`Error formatting Time for Theme: ${error.message}`);
     }
 
-    let themeElements = getThemeElements();
+    const themeElements = getThemeElements();
     if (!themeElements) {
         console.error("Failed to set theme due to missing elements.");
         return;
@@ -129,12 +131,12 @@ function setTheme() {
 
 function displayCurrentLocationTimeOnLoad() {
     try {
-        let panelElements = getPanelElements(0);
+        const panelElements = getPanelElements(0);
         if (!panelElements) {
             console.error("Failed to add time panel due to missing elements.");
             return;
         }
-        let timeZone = moment.tz.guess();
+        const timeZone = moment.tz.guess();
         formatLocationTime("Current Location", timeZone, panelElements);
     } catch (error) {
         console.error(
@@ -158,16 +160,16 @@ function currentTimeLocation(event) {
 }
 
 function getPanelElements(panelNum) {
-    let locationNameElement = document.getElementById(
+    const locationNameElement = document.getElementById(
         `location-name-${panelNum}`
     );
-    let locationDateElement = document.getElementById(
+    const locationDateElement = document.getElementById(
         `location-date-${panelNum}`
     );
-    let locationTimeElement = document.getElementById(
+    const locationTimeElement = document.getElementById(
         `location-time-${panelNum}`
     );
-    let locationAmPmElement = document.getElementById(
+    const locationAmPmElement = document.getElementById(
         `location-time-am-pm-${panelNum}`
     );
     if (
@@ -188,7 +190,7 @@ function getPanelElements(panelNum) {
 }
 
 function formatLocationTime(locationName, timeZone, panelElements) {
-    let currentLocationTime = moment().tz(timeZone);
+    const currentLocationTime = moment().tz(timeZone);
 
     panelElements["locationNameElement"].innerHTML = locationName;
     panelElements["locationDateElement"].innerHTML =
@@ -201,7 +203,7 @@ function formatLocationTime(locationName, timeZone, panelElements) {
 
 function updateTimePanel(event, panelNum) {
     try {
-        let panelElements = getPanelElements(panelNum);
+        const panelElements = getPanelElements(panelNum);
         if (!panelElements) {
             console.error("Failed to add time panel due to missing elements.");
             return;
@@ -209,7 +211,7 @@ function updateTimePanel(event, panelNum) {
         let timeZone = event.target.value;
         let locationName =
             event.target.options[event.target.selectedIndex].innerHTML;
-        if (event.target.value === "local") {
+        if (timeZone === "local") {
             timeZone = moment.tz.guess();
             locationName = "Current Location";
         }
@@ -220,7 +222,7 @@ function updateTimePanel(event, panelNum) {
 }
 
 function injectHtml(locationName, panelNum) {
-    let newHtml = `<div class="location-current-time-div">
+    const newHtml = `<div class="location-current-time-div">
                         <div class="location-name-date-div">
                             <h3 class="location-name" id="location-name-${panelNum}">
                             </h3>
@@ -237,7 +239,9 @@ function injectHtml(locationName, panelNum) {
                         </h4>
                     </div>
                 `;
-    let locationTimesSection = document.getElementById(`location-${panelNum}`);
+    const locationTimesSection = document.getElementById(
+        `location-${panelNum}`
+    );
     if (!locationTimesSection) {
         console.error(
             `Location times section (location-${panelNum}) not found.`
@@ -249,7 +253,7 @@ function injectHtml(locationName, panelNum) {
 }
 
 function handlePanelTimeUpdates() {
-    let allLocationCurrentTimeElements = document.querySelectorAll(
+    const allLocationCurrentTimeElements = document.querySelectorAll(
         ".location-current-time-div"
     );
     for (let i = 0; i < allLocationCurrentTimeElements.length; i++) {
@@ -259,14 +263,14 @@ function handlePanelTimeUpdates() {
 
 function updatePanelTime(panelNum) {
     try {
-        let locationTimeElement = document.getElementById(
+        const locationTimeElement = document.getElementById(
             `location-time-${panelNum}`
         );
         let timeZone = locationTimeElement.classList.value;
         if (timeZone === "local") {
             timeZone = moment.tz.guess();
         }
-        let locationTime = moment().tz(timeZone);
+        const locationTime = moment().tz(timeZone);
         locationTimeElement.innerHTML = locationTime.format("h:mm:ss");
     } catch (error) {
         console.error(`Error updating panel time: ${error.message}`);
@@ -274,14 +278,13 @@ function updatePanelTime(panelNum) {
 }
 
 setTheme();
-let panelInterval = setInterval(handlePanelTimeUpdates, 1000);
 setSelectOptions();
 displayCurrentLocationTimeOnLoad();
 displayHeaderLocalTime();
-let headerTimeInterval = setInterval(displayHeaderLocalTime, 10000);
-let locationSelect = document.getElementById("location-select");
+const panelInterval = setInterval(handlePanelTimeUpdates, 1000);
+const headerTimeInterval = setInterval(displayHeaderLocalTime, 10000);
+const locationSelect = document.getElementById("location-select");
 locationSelect.addEventListener("change", currentTimeLocation);
-
 window.addEventListener("beforeunload", function () {
     clearInterval(panelInterval);
     clearInterval(headerTimeInterval);
