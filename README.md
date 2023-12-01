@@ -52,9 +52,59 @@ No special installation steps are required. The application is built with HTML, 
 
 ## Challenges and Lessons Learned
 
--   **Time Zone Conversion**: Implementing accurate time zone conversion was a key challenge. Using Moment.js helped in managing different time zones efficiently.
--   **Dynamic UI Updates**: Ensuring the UI updates correctly with theme changes and time zone selections required careful state management.
--   **Initial Load Performance**: One of the areas identified for improvement is the performance during the initial load of the application. Future iterations will focus on optimizing this aspect to enhance user experience.
+### Time Zone Conversion and Data Management
+
+One of the core challenges of the World Clock project was handling accurate time zone conversion. Utilizing Moment.js and Moment Timezone significantly aided in managing and converting time zones. However, curating the `timeZoneData` required meticulous attention to ensure that each time zone was correctly mapped to its corresponding city and country name. The following snippet from `timeZoneData.js` highlights this mapping:
+
+```javascript
+export const timeZoneData = {
+    "Europe/London": "London, GBR",
+    "Asia/Tokyo": "Tokyo, JPN",
+    // more mappings...
+};
+```
+
+### Dynamic UI Updates and Reactivity
+
+Ensuring that the user interface dynamically reflects changes in theme and time zone selections presented a unique challenge. This required implementing a reactive system to update the UI based on user interactions and time changes. A key part of this was the `setTheme` function, which dynamically adjusted the theme based on the local time:
+
+```javascript
+function setTheme() {
+    let localTimeAmPM;
+    try {
+        localTimeAmPM = moment().format("A");
+    } catch (error) {
+        console.error(`Error formatting Time for Theme: ${error.message}`);
+    }
+
+    const themeElements = getThemeElements();
+    if (!themeElements) {
+        console.error("Failed to set theme due to missing elements.");
+        return;
+    }
+    if (themeElements.bodyElement.classList.contains("default-body")) {
+        themeElements.bodyElement.classList.remove("default-body");
+        themeElements.mainElement.classList.remove("default-main");
+        themeElements.locationSelectElement.classList.remove("default-select");
+    }
+    if (themeElements["bodyElement"].classList.contains("day-theme-body")) {
+        removeThemeClasses(themeElements, "day");
+    } else if (
+        themeElements["bodyElement"].classList.contains("night-theme-body")
+    ) {
+        removeThemeClasses(themeElements, "night");
+    }
+    if (localTimeAmPM === "AM") {
+        addThemeClasses(themeElements, "day");
+    } else {
+        addThemeClasses(themeElements, "night");
+    }
+}
+```
+
+### Performance Optimization and Load Delay
+
+The application currently experiences a subtle delay during loading. This issue arises from the way time zone data is processed and the extensive number of DOM manipulations required during the initialization phase. Efforts to address these challenges are ongoing. Future iterations will focus on optimizing data handling and reducing initial render time to enhance user experience. This includes exploring more efficient ways to manage DOM updates and considering lazy loading techniques for time zone data.
 
 ## Contributing
 
